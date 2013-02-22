@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://nuxeo.org/schemas/isbn">
+
+
+  <xs:element name="isbn" type="xs:string" />
+  <xs:element name="bib_key" type="xs:string" />
+  <xs:element name="info_url" type="xs:string" />
+  <xs:element name="preview" type="xs:string" />
+  <xs:element name="preview_url" type="xs:string" />
+  <xs:element name="thumbnail_url" type="xs:string" />
+
+</xs:schema>

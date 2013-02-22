@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-Vendor: Nuxeo
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Bundle-Version: 5.7-I20130107_0115
+Bundle-Name: nuxeo-book-isbn
+Nuxeo-Component: OSGI-INF/book-coretype-contrib.xml,OSGI-INF/book-operation-contrib.xml
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: nuxeo-book-isbn
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+

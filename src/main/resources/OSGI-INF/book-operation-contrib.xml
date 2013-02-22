@@ -1,0 +1,7 @@
+<component name="org.nuxeo.isbn.operation.contrib">
+
+  <extension point="operations" target="org.nuxeo.ecm.core.operation.OperationServiceComponent">
+    <operation class="org.nuxeo.isbn.ISBNQuery"/>
+  </extension>
+    
+</component>

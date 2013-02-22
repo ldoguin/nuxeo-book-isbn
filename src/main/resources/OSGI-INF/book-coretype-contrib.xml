@@ -1,0 +1,24 @@
+<component name="org.nuxeo.isbn.coretype">
+
+  <extension point="schema" target="org.nuxeo.ecm.core.schema.TypeService">
+    <schema name="isbn" prefix="isbn" src="schemas/isbn.xsd"/>
+  </extension>
+  
+  <extension point="doctype" target="org.nuxeo.ecm.core.schema.TypeService">
+
+     <doctype extends="Document" name="Book">
+      <schema name="common"/>
+      <schema name="file"/>
+      <schema name="dublincore"/>
+      <schema name="uid"/>
+      <schema name="files"/>
+      <schema name="isbn"/>
+      <facet name="Downloadable"/>
+      <facet name="Versionable"/>
+      <facet name="Publishable"/>
+      <facet name="Commentable"/>
+      <facet name="HasRelatedText"/>
+    </doctype>
+  </extension>
+
+</component>
