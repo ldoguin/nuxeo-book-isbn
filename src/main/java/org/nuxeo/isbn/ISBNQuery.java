@@ -23,8 +23,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.nuxeo.ecm.automation.core.Constants;
 import org.nuxeo.ecm.automation.core.annotations.Operation;
 import org.nuxeo.ecm.automation.core.annotations.OperationMethod;
@@ -47,7 +47,7 @@ public class ISBNQuery {
 
     @OperationMethod(collector = DocumentModelCollector.class)
     public DocumentModel run(DocumentModel input) throws MalformedURLException,
-            PropertyException, ClientException, JSONException {
+            PropertyException, ClientException {
         String isbn = input.getProperty("isbn:isbn").getValue(String.class);
         isbn = "ISBN:".concat(isbn);
         String query = String.format(QUERY_ISBN_URL, isbn);
@@ -62,27 +62,29 @@ public class ISBNQuery {
             while ((inputLine = in.readLine()) != null) {
                 sb.append(inputLine);
             }
-            JSONObject jso = new JSONObject(sb.toString());
-            JSONObject metadata = jso.getJSONObject(isbn);
-            String bib_key = metadata.getString("bib_key");
-            if (bib_key != null) {
-                input.setPropertyValue("isbn:bib_key", bib_key);
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode rootNode = mapper.readTree(sb.toString());
+            JsonNode metadata = rootNode.get(isbn);
+
+            JsonNode bib_key = metadata.get("bib_key");
+            if (bib_key != null && bib_key.isValueNode()) {
+                input.setPropertyValue("isbn:bib_key", bib_key.getValueAsText());
             }
-            String info_url = metadata.getString("info_url");
-            if (bib_key != null) {
-                input.setPropertyValue("isbn:info_url", info_url);
+            JsonNode info_url = metadata.get("info_url");
+            if (info_url != null && info_url.isValueNode()) {
+                input.setPropertyValue("isbn:info_url", info_url.getValueAsText());
             }
-            String preview = metadata.getString("preview");
-            if (bib_key != null) {
-                input.setPropertyValue("isbn:preview", preview);
+            JsonNode preview = metadata.get("preview");
+            if (preview != null && preview.isValueNode()) {
+                input.setPropertyValue("isbn:preview", preview.getValueAsText());
             }
-            String preview_url = metadata.getString("preview_url");
-            if (bib_key != null) {
-                input.setPropertyValue("isbn:preview_url", preview_url);
+            JsonNode preview_url = metadata.get("preview_url");
+            if (preview_url != null && preview_url.isValueNode()) {
+                input.setPropertyValue("isbn:preview_url", preview_url.getValueAsText());
             }
-            String thumbnail_url = metadata.getString("thumbnail_url");
-            if (bib_key != null) {
-                input.setPropertyValue("isbn:thumbnail_url", thumbnail_url);
+            JsonNode thumbnail_url = metadata.get("thumbnail_url");
+            if (thumbnail_url != null && thumbnail_url.isValueNode()) {
+                input.setPropertyValue("isbn:thumbnail_url", thumbnail_url.getValueAsText());
             }
             in.close();
         } catch (IOException e) {
